@@ -1,0 +1,309 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="EcommerenceModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Department_table">
+          <Key>
+            <PropertyRef Name="dep_id" />
+          </Key>
+          <Property Name="dep_id" Type="int" Nullable="false" />
+          <Property Name="dep_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Dropdown">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Age" Type="int" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="P_Id" />
+          </Key>
+          <Property Name="P_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="P_Name" Type="nvarchar(max)" />
+          <Property Name="P_Price" Type="int" />
+          <Property Name="P_Description" Type="nvarchar(max)" />
+          <Property Name="P_Image" Type="varchar(max)" />
+          <Property Name="C_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="Product_Category">
+          <Key>
+            <PropertyRef Name="C_Id" />
+          </Key>
+          <Property Name="C_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="C_Name" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Product_data">
+          <Key>
+            <PropertyRef Name="P_Id" />
+          </Key>
+          <Property Name="P_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="P_Name" Type="nvarchar(max)" />
+          <Property Name="P_Price" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="P_Image" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Sign_Up">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="255" />
+          <Property Name="Email" Type="nvarchar" MaxLength="255" />
+          <Property Name="Password" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Student_table">
+          <Key>
+            <PropertyRef Name="Std_id" />
+          </Key>
+          <Property Name="Std_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Std_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="dep_id" Type="int" />
+        </EntityType>
+        <Association Name="FK__Product__C_Id__4D94879B">
+          <End Role="Product_Category" Type="Self.Product_Category" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product_Category">
+              <PropertyRef Name="C_Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="C_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Student_table_Department_table">
+          <End Role="Department_table" Type="Self.Department_table" Multiplicity="0..1" />
+          <End Role="Student_table" Type="Self.Student_table" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department_table">
+              <PropertyRef Name="dep_id" />
+            </Principal>
+            <Dependent Role="Student_table">
+              <PropertyRef Name="dep_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EcommerenceModelStoreContainer">
+          <EntitySet Name="Department_table" EntityType="Self.Department_table" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Dropdown" EntityType="Self.Dropdown" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product_Category" EntityType="Self.Product_Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product_data" EntityType="Self.Product_data" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sign_Up" EntityType="Self.Sign_Up" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Student_table" EntityType="Self.Student_table" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Product__C_Id__4D94879B" Association="Self.FK__Product__C_Id__4D94879B">
+            <End Role="Product_Category" EntitySet="Product_Category" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Student_table_Department_table" Association="Self.FK_Student_table_Department_table">
+            <End Role="Department_table" EntitySet="Department_table" />
+            <End Role="Student_table" EntitySet="Student_table" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EcommerenceModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Department_table">
+          <Key>
+            <PropertyRef Name="dep_id" />
+          </Key>
+          <Property Name="dep_id" Type="Int32" Nullable="false" />
+          <Property Name="dep_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Student_table" Relationship="Self.FK_Student_table_Department_table" FromRole="Department_table" ToRole="Student_table" />
+        </EntityType>
+        <EntityType Name="Dropdown">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Age" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="P_Id" />
+          </Key>
+          <Property Name="P_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="P_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="P_Price" Type="Int32" />
+          <Property Name="P_Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="P_Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="C_Id" Type="Int32" />
+          <NavigationProperty Name="Product_Category" Relationship="Self.FK__Product__C_Id__4D94879B" FromRole="Product" ToRole="Product_Category" />
+        </EntityType>
+        <EntityType Name="Product_Category">
+          <Key>
+            <PropertyRef Name="C_Id" />
+          </Key>
+          <Property Name="C_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="C_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Products" Relationship="Self.FK__Product__C_Id__4D94879B" FromRole="Product_Category" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Product_data">
+          <Key>
+            <PropertyRef Name="P_Id" />
+          </Key>
+          <Property Name="P_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="P_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="P_Price" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="P_Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Sign_Up">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Student_table">
+          <Key>
+            <PropertyRef Name="Std_id" />
+          </Key>
+          <Property Name="Std_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Std_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="dep_id" Type="Int32" />
+          <NavigationProperty Name="Department_table" Relationship="Self.FK_Student_table_Department_table" FromRole="Student_table" ToRole="Department_table" />
+        </EntityType>
+        <Association Name="FK_Student_table_Department_table">
+          <End Role="Department_table" Type="Self.Department_table" Multiplicity="0..1" />
+          <End Role="Student_table" Type="Self.Student_table" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department_table">
+              <PropertyRef Name="dep_id" />
+            </Principal>
+            <Dependent Role="Student_table">
+              <PropertyRef Name="dep_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Product__C_Id__4D94879B">
+          <End Role="Product_Category" Type="Self.Product_Category" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product_Category">
+              <PropertyRef Name="C_Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="C_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EcommerenceEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Department_table" EntityType="Self.Department_table" />
+          <EntitySet Name="Dropdowns" EntityType="Self.Dropdown" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="Product_Category" EntityType="Self.Product_Category" />
+          <EntitySet Name="Product_data" EntityType="Self.Product_data" />
+          <EntitySet Name="Sign_Up" EntityType="Self.Sign_Up" />
+          <EntitySet Name="Student_table" EntityType="Self.Student_table" />
+          <AssociationSet Name="FK_Student_table_Department_table" Association="Self.FK_Student_table_Department_table">
+            <End Role="Department_table" EntitySet="Department_table" />
+            <End Role="Student_table" EntitySet="Student_table" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__C_Id__4D94879B" Association="Self.FK__Product__C_Id__4D94879B">
+            <End Role="Product_Category" EntitySet="Product_Category" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EcommerenceModelStoreContainer" CdmEntityContainer="EcommerenceEntities">
+          <EntitySetMapping Name="Department_table">
+            <EntityTypeMapping TypeName="EcommerenceModel.Department_table">
+              <MappingFragment StoreEntitySet="Department_table">
+                <ScalarProperty Name="dep_id" ColumnName="dep_id" />
+                <ScalarProperty Name="dep_name" ColumnName="dep_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dropdowns">
+            <EntityTypeMapping TypeName="EcommerenceModel.Dropdown">
+              <MappingFragment StoreEntitySet="Dropdown">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="EcommerenceModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="P_Id" ColumnName="P_Id" />
+                <ScalarProperty Name="P_Name" ColumnName="P_Name" />
+                <ScalarProperty Name="P_Price" ColumnName="P_Price" />
+                <ScalarProperty Name="P_Description" ColumnName="P_Description" />
+                <ScalarProperty Name="P_Image" ColumnName="P_Image" />
+                <ScalarProperty Name="C_Id" ColumnName="C_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product_Category">
+            <EntityTypeMapping TypeName="EcommerenceModel.Product_Category">
+              <MappingFragment StoreEntitySet="Product_Category">
+                <ScalarProperty Name="C_Id" ColumnName="C_Id" />
+                <ScalarProperty Name="C_Name" ColumnName="C_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product_data">
+            <EntityTypeMapping TypeName="EcommerenceModel.Product_data">
+              <MappingFragment StoreEntitySet="Product_data">
+                <ScalarProperty Name="P_Id" ColumnName="P_Id" />
+                <ScalarProperty Name="P_Name" ColumnName="P_Name" />
+                <ScalarProperty Name="P_Price" ColumnName="P_Price" />
+                <ScalarProperty Name="P_Image" ColumnName="P_Image" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sign_Up">
+            <EntityTypeMapping TypeName="EcommerenceModel.Sign_Up">
+              <MappingFragment StoreEntitySet="Sign_Up">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Student_table">
+            <EntityTypeMapping TypeName="EcommerenceModel.Student_table">
+              <MappingFragment StoreEntitySet="Student_table">
+                <ScalarProperty Name="Std_id" ColumnName="Std_id" />
+                <ScalarProperty Name="Std_name" ColumnName="Std_name" />
+                <ScalarProperty Name="dep_id" ColumnName="dep_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
